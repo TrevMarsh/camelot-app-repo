@@ -4,15 +4,16 @@
     ViewBag.Title = "Session: " + Model.SessionName;
     Layout = "~/Views/Shared/_HostSessionLayout.cshtml";
 }
-
-<h2>Host</h2>
+<div class="jumbotron">
+    <h2>@Model.SessionName</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Round: +(id of active round)</h4>
+        <h4>Round number: @Model.Number</h4>
         <hr />
         @Html.HiddenFor(m => m.SessionID)
         @Html.HiddenFor(m => m.SessionName)

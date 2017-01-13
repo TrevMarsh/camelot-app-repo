@@ -9,5 +9,6 @@ namespace Camelot.ViewModels
         public string Topic { get; set; }
         public Score Importance { get; set; }
         public Score Feasability { get; set; }
+        public string Color { get; set; }
     }
 }

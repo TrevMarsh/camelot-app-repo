@@ -230,7 +230,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\MyChart.js" />
     <Content Include="Scripts\Program.js" />
     <Content Include="Scripts\Room.js" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -260,6 +259,7 @@
     <Content Include="Views\Voting\Register.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Voting\_Graph.cshtml" />
+    <Content Include="Views\Home\Archive.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -286,7 +286,7 @@
     <Compile Include="Models\Part.cs" />
     <Compile Include="ViewModels\SessionParticipant.cs" />
     <Compile Include="ViewModels\TopicResponse.cs" />
-    <Compile Include="ChatHub.cs" />
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\VotingController.cs" />
@@ -300,13 +300,12 @@
     <Compile Include="Models\Round.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Session.cs" />
-    <Compile Include="SessionHub.cs" />
+    <Compile Include="Hubs\SessionHub.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\SessionRound.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Camelot\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

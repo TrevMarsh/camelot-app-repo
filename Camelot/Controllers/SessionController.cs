@@ -16,14 +16,12 @@ namespace Camelot.Controllers
     public class SessionController : Controller
     {
         private CamelotContext db = new CamelotContext();
-
-        // GET: Session
+        
         public ActionResult Index()
         {
             return View(db.Sessions.ToList());
         }
-
-        // GET: Session/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,16 +35,12 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-
-        // GET: Session/Create
+        
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Session/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,StartTime,EndTime")] Session session)
@@ -61,8 +55,7 @@ namespace Camelot.Controllers
 
             return View(session);
         }
-
-        // GET: Session/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,10 +69,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-
-        // POST: Session/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,StartTime,EndTime")] Session session)
@@ -93,8 +83,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-
-        // GET: Session/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -108,8 +97,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-
-        // POST: Session/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -156,6 +144,18 @@ namespace Camelot.Controllers
                 };
 
                 db.Rounds.Add(round);
+                db.SaveChanges();
+
+                // 1. create a new part for the newly created round and add it too it
+
+                Part part = new Part
+                {
+                    IsActive = true,
+                    Number = 1,
+                    RoundID = round.ID
+                };
+
+                db.Parts.Add(part);
                 db.SaveChanges();
                 
                 SessionHub.BroadcastTopic(round);

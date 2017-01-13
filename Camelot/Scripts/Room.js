@@ -15,11 +15,13 @@
 function getControls(model) {
     // contintue here! use the value of the text label of the user and pass it along to keep a new vm company
     var user = $('#participant').text();
+    var color = rgb2hex($('#color').css('backgroundColor'));
 
     var section = $('#votingControls');
     var json = JSON.stringify({
         'round': model,
-        'user': user
+        'user': user,
+        'color': color
     });
     $.ajax(
     {
@@ -35,6 +37,14 @@ function getControls(model) {
             alert(e);
         }
     });
+}
+
+function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
 

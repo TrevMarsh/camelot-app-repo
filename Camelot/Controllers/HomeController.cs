@@ -10,8 +10,7 @@ namespace Camelot.Controllers
     public class HomeController : Controller
     {
         private CamelotContext db = new CamelotContext();
-
-        // GET: Home
+        
         public ActionResult Program()
         {
             return View();

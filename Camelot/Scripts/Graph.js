@@ -6,8 +6,8 @@
         getChartData(0);
     });
     // Notify while changes
-    sessionhub.client.updateGraph = function (id) {
-        getChartData(id)
+    sessionhub.client.updateGraph = function (roundID) {
+        getChartData(roundID)
     }
 });
 

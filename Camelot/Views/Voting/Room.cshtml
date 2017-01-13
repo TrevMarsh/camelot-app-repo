@@ -14,10 +14,13 @@
 }))
 {
     <div id="banner" class="container row">
-        <div id="session" class="col-md-6">
+        <div id="session" class="col-md-4">
             <h3>Session: <span class="label label-default">@Model.SessionName</span></h3>
         </div>
-        <div id="userName" class="col-md-6">
+        <div id="userName" class="col-md-4">
+            <h3><span id="color" class="label" style="background-color: @Model.Color">color</span></h3>
+        </div>
+        <div id="userName" class="col-md-4">
             <h3>Participant: <span id="participant" class="label label-info">@Model.Name</span></h3>
         </div>
     </div>

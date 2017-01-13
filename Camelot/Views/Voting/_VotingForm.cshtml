@@ -4,8 +4,9 @@
 
 @Html.AntiForgeryToken()
 <div class="form-horizontal">
-    @Html.HiddenFor(m => m.RoundID)
+    @Html.HiddenFor(m => m.PartID)
     @Html.HiddenFor(m => m.Participant)
+    @Html.HiddenFor(m => m.Color)
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-4">

@@ -3,69 +3,20 @@
     ViewBag.Title = "About";
 }
 
-<h2>About</h2>
-
-
-<div>
-
-    <center><h1>Horizontal Slider</h1></center>
-
-    <hr />
-
-    <div id="hslider"></div>
-
+<div class="jumbotron">
+    <h1>About</h1>
 </div>
 
-<br />
+<div class="clearfix">&nbsp;</div>
+<div class="clearfix">&nbsp;</div>
 
-<div style="display: inline; margin-left: 300px; height: 100%">
-
-    <hr />
-
-    <center><h1>Vertical Slider</h1></center>
-
-    <hr />
-
-    <center><div id="vslider"></div></center>
-
+<div class="container">
+    <div class="row">
+        <p>This is the about page. <br />
+            There isn't much to show here for the page is still <span>under construction</span> but stay tuned!
+        </p>
+    </div>
 </div>
 
-@section scripts {
-    <script type="text/javascript">
 
-        $(document).ready(function () {
 
-            //Horizontal Slider
-
-            $('#hslider').slider({
-
-                range: true,
-
-                values: [17, 67]
-
-            });
-
-            //Vertical Slider
-
-            $("#vslider").slider({
-
-                orientation: "vertical",
-
-                range: "min",
-
-                min: 0,
-
-                max: 100,
-
-                value: 60,
-
-                slide: function (event, ui) {
-
-                }
-
-            });
-
-        });
-
-    </script>
-}

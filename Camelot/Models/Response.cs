@@ -19,6 +19,7 @@ namespace Camelot.Models
         public int PartID { get; set; }
         public Score Importance { get; set; }
         public Score Feasability { get; set; }
+        public string Color { get; set; }
         
         public virtual Part Part { get; set; }
     }
