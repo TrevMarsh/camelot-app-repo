@@ -1,0 +1,39 @@
+﻿@model Camelot.ViewModels.SessionRound
+
+@{
+    ViewBag.Title = "Session: " + Model.SessionName;
+    Layout = "~/Views/Shared/_HostSessionLayout.cshtml";
+}
+
+<h2>Host</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Round: +(id of active round)</h4>
+        <hr />
+        @Html.HiddenFor(m => m.SessionID)
+        @Html.HiddenFor(m => m.SessionName)
+        @Html.HiddenFor(m => m.Number)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Start" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+}
+<hr/>
+<div>
+    @Html.ActionLink("Back", "Program", "Home", null, new { @class = "btn btn-warning", @style = "color:white" })
+</div>
+
+

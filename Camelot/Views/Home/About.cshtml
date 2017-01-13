@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "About";
+}
+
+<h2>About</h2>
+
+
+<div>
+
+    <center><h1>Horizontal Slider</h1></center>
+
+    <hr />
+
+    <div id="hslider"></div>
+
+</div>
+
+<br />
+
+<div style="display: inline; margin-left: 300px; height: 100%">
+
+    <hr />
+
+    <center><h1>Vertical Slider</h1></center>
+
+    <hr />
+
+    <center><div id="vslider"></div></center>
+
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //Horizontal Slider
+
+            $('#hslider').slider({
+
+                range: true,
+
+                values: [17, 67]
+
+            });
+
+            //Vertical Slider
+
+            $("#vslider").slider({
+
+                orientation: "vertical",
+
+                range: "min",
+
+                min: 0,
+
+                max: 100,
+
+                value: 60,
+
+                slide: function (event, ui) {
+
+                }
+
+            });
+
+        });
+
+    </script>
+}

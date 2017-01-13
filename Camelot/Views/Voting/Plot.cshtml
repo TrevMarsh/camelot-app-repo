@@ -1,0 +1,44 @@
+﻿@model Camelot.Models.Round
+
+@{
+    ViewBag.Title = "Plot";
+    Layout = "~/Views/Shared/_HostSessionLayout.cshtml";
+}
+
+<div class="clearfix"> &nbsp; </div>
+<div class="container">
+    <h2><span class="label label-info">@Model.Topic</span></h2>
+</div>
+<hr />
+
+<div class="container">
+    <div id="graphContainer">
+
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+    </div>
+    <div class="clearfix"> &nbsp; </div>
+</div>
+
+<hr />
+
+<div id="buttons" class="container">
+    <div class="col-md-1">
+        @Html.ActionLink("Cancel", "Cancel", "Voting", new { id = Model.ID }, new { @class = "btn btn-warning", @style = "color:white" })
+    </div>
+    <div class="col-md-2 col-md-offset-9">
+        @Html.ActionLink("Continue", "Next", "Voting", new { id = Model.ID }, new { @class = "btn btn-success", @style = "color:white" })
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script src="~/Scripts/Graph.js"></script>
+
+    <script type="text/javascript">
+
+    window.onload = getChartData(@Model.ID)
+</script>
+}

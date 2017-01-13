@@ -1,0 +1,65 @@
+﻿@using Camelot.Models
+@model Camelot.ViewModels.TopicResponse
+
+
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+    @Html.HiddenFor(m => m.RoundID)
+    @Html.HiddenFor(m => m.Participant)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+            <h3><span class="label label-default">@Model.Topic</span></h3>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Importance, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Importance, Score.ONE) @((int)Score.ONE)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Importance, Score.TWO) @((int)Score.TWO)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Importance, Score.THREE) @((int)Score.THREE)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Importance, Score.FOUR) @((int)Score.FOUR)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Importance, Score.FIVE) @((int)Score.FIVE)
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Feasability, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Feasability, Score.ONE) @((int)Score.ONE)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Feasability, Score.TWO) @((int)Score.TWO)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Feasability, Score.THREE) @((int)Score.THREE)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Feasability, Score.FOUR) @((int)Score.FOUR)
+            </label>
+            <label class="btn btn-primary">
+                @Html.RadioButtonFor(m => m.Feasability, Score.FIVE) @((int)Score.FIVE)
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-2">
+        <input id="voteBtn" type="submit" value="Vote" class="btn btn-success" />
+    </div>
+</div>

@@ -1,0 +1,12 @@
+﻿@model Int32
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script>
+    @*
+        1. call an .ajax function that gets the data that is needed for the chart
+        2. then use that data to draw a chart  
+    *@
+    window.onload = getChartData(@Model)
+    //$(function () { drawChart(null); });
+</script>
