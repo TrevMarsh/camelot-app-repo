@@ -26,8 +26,14 @@
     <div class="col-md-1">
         @Html.ActionLink("Cancel", "Cancel", "Voting", new { id = Model.ID }, new { @class = "btn btn-warning", @style = "color:white" })
     </div>
-    <div class="col-md-2 col-md-offset-9">
+    <div class="col-md-1 col-md-offset-6">
+        @Html.ActionLink("Repeat", "Repeat", "Voting", new { id = Model.ID }, new { @class = "btn btn-primary", @style = "color:white" })
+    </div>
+    <div class="col-md-1 col-md-offset-2">
         @Html.ActionLink("Continue", "Next", "Voting", new { id = Model.ID }, new { @class = "btn btn-success", @style = "color:white" })
+    </div>
+    <div class="col-md-1">
+        @Html.ActionLink("Finish", "Close", "Voting", new { id = Model.ID }, new { @class = "btn btn-danger", @style = "color:white" })
     </div>
 </div>
 
