@@ -284,6 +284,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Models\Part.cs" />
+    <Compile Include="Models\UserAccount.cs" />
     <Compile Include="ViewModels\SessionParticipant.cs" />
     <Compile Include="ViewModels\TopicResponse.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
