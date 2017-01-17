@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Camelot.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private CamelotContext db = new CamelotContext();
