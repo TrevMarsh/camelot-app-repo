@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>UserAccount</h4>
+        <!--<h4>UserAccount</h4>-->
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
@@ -48,6 +48,7 @@
 }
 
 <div>
+    New User? @Html.ActionLink("Register", "Register") here.<br />
     @Html.ActionLink("Back to List", "Index")
 </div>
 
