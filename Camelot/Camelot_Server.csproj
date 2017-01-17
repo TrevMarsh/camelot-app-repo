@@ -260,6 +260,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Voting\_Graph.cshtml" />
     <Content Include="Views\Home\Archive.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\LoggedIn.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -309,7 +313,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
