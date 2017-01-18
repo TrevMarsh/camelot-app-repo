@@ -23,6 +23,7 @@ namespace Camelot.Controllers
             return View();
         }
 
+        //Adding new user
         [HttpPost]
         public ActionResult Register(UserAccount account)
         {
@@ -55,7 +56,7 @@ namespace Camelot.Controllers
                 {
                     Session["UserID"] = usr.UserID.ToString();
                     Session["Username"] = usr.Username.ToString();
-                    return RedirectToAction("LoggedIn");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
