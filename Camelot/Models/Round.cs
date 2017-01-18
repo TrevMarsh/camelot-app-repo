@@ -17,7 +17,6 @@ namespace Camelot.Models
         public bool IsActive { get; set; }
         public int SessionID { get; set; }
         
-
         public virtual Session Session { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
 

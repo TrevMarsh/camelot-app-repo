@@ -78,6 +78,7 @@ namespace Camelot.Controllers
             }
         }
 
+        //Logout function
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
