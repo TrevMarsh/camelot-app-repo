@@ -48,16 +48,17 @@ namespace Camelot.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserAccount model, string returnUrl)
+        public ActionResult Login(UserAccount user)
         {
-            //Lets first check if the Model is valid or not
-            if (ModelState.IsValid)
+            using (OurDbContext db = new OurDbContext())
             {
-                using (userDbEntities entities = new userDbEntities())
+                var usr = db.userAccount.Single(u => u.Username == user.Username && user.Password == user.Password);
+                if (usr != null)
                 {
+                    FormsAuthentication.SetAuthCookie(usr.UserID.ToString(), false);
                     Session["UserID"] = usr.UserID.ToString();
                     Session["Username"] = usr.Username.ToString();
-                    return RedirectToAction("LoggedIn");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
