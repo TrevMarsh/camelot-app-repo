@@ -55,11 +55,26 @@ namespace Camelot.Controllers
             {
                 using (userDbEntities entities = new userDbEntities())
                 {
-                    string username = model.Username;
-                    string password = model.Password;
-
-                    bool userValid = entities.
+                    Session["UserID"] = usr.UserID.ToString();
+                    Session["Username"] = usr.Username.ToString();
+                    return RedirectToAction("LoggedIn");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Username or Password is wrong.");
+                }
+            }
+            return View();
+        }
+        public ActionResult LoggedIn()
+        {
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
             }
         }
     }
