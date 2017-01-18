@@ -17,5 +17,16 @@ namespace Camelot
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                "Default", // Route name
+                "{controller}/{action}/{id}",
+                new { controller = "Public", action = "Home", id = UrlParameter.Optional } // Parameter defaults
+                );
+        }
     }
 }

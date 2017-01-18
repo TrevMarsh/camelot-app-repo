@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Camelot.Models;
+using System.Web.Security;
 
 namespace Camelot.Controllers
 {
@@ -23,6 +24,7 @@ namespace Camelot.Controllers
             return View();
         }
 
+        //Adding new user
         [HttpPost]
         public ActionResult Register(UserAccount account)
         {
@@ -46,33 +48,18 @@ namespace Camelot.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserAccount user)
+        public ActionResult Login(UserAccount model, string returnUrl)
         {
-            using (OurDbContext db = new OurDbContext())
+            //Lets first check if the Model is valid or not
+            if (ModelState.IsValid)
             {
-                var usr = db.userAccount.Single(u => u.Username == user.Username && user.Password == user.Password);
-                if (usr != null)
+                using (userDbEntities entities = new userDbEntities())
                 {
-                    Session["UserID"] = usr.UserID.ToString();
-                    Session["Username"] = usr.Username.ToString();
-                    return RedirectToAction("LoggedIn");
+                    string username = model.Username;
+                    string password = model.Password;
+
+                    bool userValid = entities.
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password is wrong.");
-                }
-            }
-            return View();
-        }
-        public ActionResult LoggedIn()
-        {
-            if (Session["UserId"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login");
             }
         }
     }
