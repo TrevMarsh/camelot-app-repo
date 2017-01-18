@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Camelot.Models;
+using System.Web.Security;
 
 namespace Camelot.Controllers
 {
@@ -53,6 +54,7 @@ namespace Camelot.Controllers
                 var usr = db.userAccount.Single(u => u.Username == user.Username && user.Password == user.Password);
                 if (usr != null)
                 {
+                    FormsAuthentication.SetAuthCookie(usr.UserID.ToString(), false);
                     Session["UserID"] = usr.UserID.ToString();
                     Session["Username"] = usr.Username.ToString();
                     return RedirectToAction("LoggedIn");
