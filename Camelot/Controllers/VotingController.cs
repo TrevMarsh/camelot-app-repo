@@ -122,6 +122,7 @@ namespace Camelot.Controllers
             return View(vm);
         }
 
+        //Finish the current session
         public ActionResult Close()
         {
             return View();
