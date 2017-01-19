@@ -122,6 +122,11 @@ namespace Camelot.Controllers
             return View(vm);
         }
 
+        public ActionResult Next()
+        {
+            return RedirectToAction("Start");
+        }
+
         //Finish the current session
         public ActionResult Close()
         {

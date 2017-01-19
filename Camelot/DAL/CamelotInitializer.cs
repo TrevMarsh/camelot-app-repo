@@ -17,7 +17,8 @@ namespace Camelot.DAL
                 new Session { Name="Become Rich", Active=true, StartTime=DateTime.Parse("2016-12-22") },
                 new Session { Name="Graduate", Active=false, StartTime=DateTime.Parse("2010-09-01"), EndTime= DateTime.Parse("2016-02-29") },
                 new Session { Name="Project: Camelot", Active=true, StartTime=DateTime.Parse("2016-12-12") },
-                new Session { Name="Watch Star Wars", Active=false, StartTime=DateTime.Parse("1977-05-25"), EndTime=DateTime.Parse("1990-03-12") }
+                new Session { Name="Watch Star Wars", Active=false, StartTime=DateTime.Parse("1977-05-25"), EndTime=DateTime.Parse("1990-03-12") },
+                new Session { Name="Tacos Day", Active=true, StartTime=DateTime.Parse("2016-12-12")}
             };
 
             sessions.ForEach(s => context.Sessions.Add(s));

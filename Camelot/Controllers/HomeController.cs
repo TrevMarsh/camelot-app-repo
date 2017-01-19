@@ -22,6 +22,11 @@ namespace Camelot.Controllers
             return PartialView("_SessionList", db.Sessions.Where(s => s.EndTime == null).ToList());
         }
 
+        public ActionResult GetArchiveData()
+        {
+            return PartialView("_ArchiveList", db.Sessions.Where(s => s.EndTime != null).ToList());
+        }
+
         public ActionResult Chat()
         {
             return View();

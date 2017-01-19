@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Camelot.Models.Session>
+
+<table class="table table-striped table-responsive table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.ActionLink("Start", "Start", "Session", new { id = item.ID }, new { @class = "btn btn-success", @style = "color:white" })
+            </td>
+        </tr>
+    }
+</table>
+
+
