@@ -7,11 +7,12 @@ using System.Web.Mvc;
 
 namespace Camelot.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private CamelotContext db = new CamelotContext();
         
+        [Authorize]
         public ActionResult Program()
         {
             return View();
@@ -42,6 +43,7 @@ namespace Camelot.Controllers
             return PartialView("_ActivesList", db.Sessions.Where(s => s.StartTime != null && s.EndTime == null).ToList());
         }
 
+        [Authorize]
         public ActionResult Archive()
         {
             return View();
