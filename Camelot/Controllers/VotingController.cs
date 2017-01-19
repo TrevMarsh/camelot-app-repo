@@ -122,6 +122,11 @@ namespace Camelot.Controllers
             return View(vm);
         }
 
+        public ActionResult Close()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult GetVotingControls(Round round, string user, string color)
         {
