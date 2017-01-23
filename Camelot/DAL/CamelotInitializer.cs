@@ -13,7 +13,7 @@ namespace Camelot.DAL
         {
             var sessions = new List<Session>
             {
-                new Session { Name="NYE", Active=true, StartTime=DateTime.Parse("2016-12-22") },
+                new Session { Name="NYYY", Active=true, StartTime=DateTime.Parse("2016-12-22") },
                 new Session { Name="Become Rich", Active=true, StartTime=DateTime.Parse("2016-12-22") },
                 new Session { Name="Graduate", Active=false, StartTime=DateTime.Parse("2010-09-01"), EndTime= DateTime.Parse("2016-02-29") },
                 new Session { Name="Project: Camelot", Active=true, StartTime=DateTime.Parse("2016-12-12") },
@@ -40,6 +40,10 @@ namespace Camelot.DAL
 
             var responses = new List<Response>
             {
+                new Response { PartID=1, Importance = Score.FIVE, Feasability = Score.FOUR },
+                new Response { PartID=2, Importance = Score.FOUR, Feasability = Score.FOUR },
+                new Response { PartID=3, Importance = Score.FIVE, Feasability = Score.FIVE },
+                new Response { PartID=4, Importance = Score.THREE, Feasability = Score.THREE }
                 //new Response { RoundID=1, Participant="Bob", Importance=Score.FIVE, Feasability=Score.FOUR},
                 //new Response { RoundID=1, Participant="Jill", Importance=Score.THREE, Feasability=Score.TWO},
                 //new Response { RoundID=1, Participant="Andy", Importance=Score.FIVE, Feasability=Score.FIVE},

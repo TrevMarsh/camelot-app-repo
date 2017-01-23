@@ -158,7 +158,6 @@ namespace Camelot.Controllers
                 Importance = topicResponse.Importance,
                 Feasability = topicResponse.Feasability,
                 Color = topicResponse.Color
-                
             };
             db.Responses.Add(response);
             db.SaveChanges();

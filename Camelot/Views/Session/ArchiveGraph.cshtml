@@ -30,11 +30,13 @@
 @section scripts {
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
-    <script src="/signalr/hubs"></script>
+    @*<script src="/signalr/hubs"></script>*@
     <script src="~/Scripts/Graph.js"></script>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = getChartData(@Model.ID);
+        });
 
-    window.onload = getChartData(@Model.ID)
     </script>
 }
