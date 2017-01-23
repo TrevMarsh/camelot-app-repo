@@ -16,6 +16,7 @@ namespace Camelot.Controllers
     public class SessionController : Controller
     {
         private CamelotContext db = new CamelotContext();
+        private readonly int RADIUS = 10;
         
         public ActionResult Index()
         {
@@ -39,6 +40,55 @@ namespace Camelot.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        public ActionResult ArchiveGraph(int id)
+        {
+            Round round = db.Rounds.Find(id);
+
+            return View(round);
+        }
+
+        [HttpPost]
+        public JsonResult GetChartArchiveData(int? roundID)
+        {
+            if (roundID == null || roundID == 0)
+            {
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+            var round = db.Rounds.Find(roundID);
+            var part = round.Parts.FirstOrDefault(p => p.IsActive);
+
+            if (part == null)
+            {
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+
+            var responses = part.Responses.ToList();
+
+            var datasets = responses.Select(r =>
+            {
+                var point = new
+                {
+                    x = (int)r.Importance,
+                    y = (int)r.Feasability,
+                    r = RADIUS
+                };
+
+                var points = new[] { point }.ToList();
+                return new
+                {
+                    label = r.Participant,
+                    backgroundColor = r.Color,
+                    hoverBackgroundColor = r.Color,
+                    data = points
+                };
+            }
+            ).ToList();
+
+            db.SaveChanges();
+
+            return Json(datasets, JsonRequestBehavior.AllowGet);
         }
         
         [HttpPost]

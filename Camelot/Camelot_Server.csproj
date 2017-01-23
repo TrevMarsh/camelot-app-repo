@@ -216,6 +216,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Graph-Archive.js" />
     <Content Include="Scripts\Graph.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -267,6 +268,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Voting\Close.cshtml" />
     <Content Include="Views\Home\_ArchiveList.cshtml" />
+    <Content Include="Views\Session\ArchiveGraph.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

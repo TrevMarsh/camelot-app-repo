@@ -21,7 +21,7 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.ActionLink("Start", "Start", "Session", new { id = item.ID }, new { @class = "btn btn-success", @style = "color:white" })
+                @Html.ActionLink("View", "ArchiveGraph", "Session", new { id = item.ID }, new { @class = "btn btn-success", @style = "color:white" })
             </td>
         </tr>
     }

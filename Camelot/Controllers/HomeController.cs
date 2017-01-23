@@ -7,7 +7,6 @@ using System.Web.Mvc;
 
 namespace Camelot.Controllers
 {
-    
     public class HomeController : Controller
     {
         private CamelotContext db = new CamelotContext();
@@ -47,6 +46,11 @@ namespace Camelot.Controllers
         public ActionResult Archive()
         {
             return View();
+        }
+
+        public ActionResult Back()
+        {
+            return RedirectToAction("Archive");
         }
 
         public ActionResult About()
