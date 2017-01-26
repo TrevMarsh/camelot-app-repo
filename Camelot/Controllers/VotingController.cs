@@ -159,6 +159,7 @@ namespace Camelot.Controllers
                 Feasability = topicResponse.Feasability,
                 Color = topicResponse.Color
             };
+            
             db.Responses.Add(response);
             db.SaveChanges();
 
@@ -167,6 +168,22 @@ namespace Camelot.Controllers
             SessionHub.RespondToTopic(part.RoundID);
 
             return PartialView("_VoteConfirmation");
+        }
+
+        [HttpGet]
+        public RedirectToRouteResult Repeat(int ID)
+        {
+            Part parts = new Part
+            {
+                IsActive = true,
+                Number = 1,
+                RoundID = ID
+            };
+
+            db.Parts.Add(parts);
+            db.SaveChanges();
+
+            return RedirectToAction("Plot", "Voting", new { id = ID });
         }
 
     }
