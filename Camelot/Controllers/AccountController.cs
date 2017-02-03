@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Camelot.Models;
 using System.Web.Security;
+using Camelot.DAL;
 
 namespace Camelot.Controllers
 {
@@ -13,7 +14,7 @@ namespace Camelot.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            using (OurDbContext db = new OurDbContext())
+            using (CamelotContext db = new CamelotContext())
             {
                 return View(db.userAccount.ToList());
             }
@@ -29,7 +30,7 @@ namespace Camelot.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (OurDbContext db = new OurDbContext())
+                using (CamelotContext db = new CamelotContext())
                 {
                     db.userAccount.Add(account);
                     db.SaveChanges(); //required to save changes to db
@@ -49,9 +50,9 @@ namespace Camelot.Controllers
         [HttpPost]
         public ActionResult Login(UserAccount user)
         {
-            using (OurDbContext db = new OurDbContext())
+            using (CamelotContext db = new CamelotContext())
             {
-                var usr = db.userAccount.Single(u => u.Username == user.Username && user.Password == user.Password);
+                var usr = db.userAccount.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
                 if (usr != null)
                 {
                     FormsAuthentication.SetAuthCookie(usr.UserID.ToString(), false);

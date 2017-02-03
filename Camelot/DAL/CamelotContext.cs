@@ -16,5 +16,6 @@ namespace Camelot.DAL
         public DbSet<Round> Rounds { get; set; }
         public DbSet<Part> Parts { get; set; }
         public DbSet<Response> Responses { get; set; }
+        public DbSet<UserAccount> userAccount { get; set; }
     }
 }

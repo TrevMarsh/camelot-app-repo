@@ -49,6 +49,19 @@ namespace Camelot.Controllers
             return View(round);
         }
 
+        public ActionResult RoundData(int id)
+        {
+            Session session = db.Sessions.Find(id);
+            var roundList = session.Rounds;
+
+            return PartialView("_RoundData", roundList);
+        }
+
+        public ActionResult RoundList(int id)
+        {
+            return View(id);
+        }
+
         [HttpPost]
         public JsonResult GetChartArchiveData(int? roundID)
         {

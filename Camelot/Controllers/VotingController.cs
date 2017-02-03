@@ -173,10 +173,12 @@ namespace Camelot.Controllers
         [HttpGet]
         public RedirectToRouteResult Repeat(int ID)
         {
+            var currentRound = db.Rounds.FirstOrDefault(r => r.ID == ID);
+            var partNumber = currentRound.Parts.Last().ID + 1;
             Part parts = new Part
             {
                 IsActive = true,
-                Number = 1,
+                Number = partNumber,
                 RoundID = ID
             };
 
