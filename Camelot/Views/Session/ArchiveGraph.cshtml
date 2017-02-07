@@ -23,7 +23,7 @@
 
 <div id="buttons" class="container">
     <div class="col-md-1">
-        @Html.ActionLink("Back", "RoundList","Session", new { id = Model.ID }, new { @class = "btn btn-warning", @style = "color:white" })
+        @Html.ActionLink("Back", "RoundList","Session", new { id = Model.SessionID }, new { @class = "btn btn-warning", @style = "color:white" })
     </div>
 </div>
 
@@ -31,7 +31,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
     @*<script src="/signalr/hubs"></script>*@
-    <script src="~/Scripts/Graph.js"></script>
+    <script src="~/Scripts/Graph-Archive.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

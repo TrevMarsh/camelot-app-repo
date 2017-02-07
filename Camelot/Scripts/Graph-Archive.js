@@ -18,7 +18,7 @@ function getChartData(roundID) {
     });
 
     $.ajax({
-        url: "/Voting/GetChartArchiveData",
+        url: "/Session/GetChartArchiveData",
         data: json,
         contentType: 'application/json ; charset:utf-8',
         type: "POST",

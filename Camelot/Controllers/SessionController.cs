@@ -70,7 +70,7 @@ namespace Camelot.Controllers
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
             var round = db.Rounds.Find(roundID);
-            var part = round.Parts.FirstOrDefault(p => p.IsActive);
+            var part = round.Parts.FirstOrDefault();
 
             if (part == null)
             {
