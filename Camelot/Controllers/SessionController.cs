@@ -17,12 +17,12 @@ namespace Camelot.Controllers
     {
         private CamelotContext db = new CamelotContext();
         private readonly int RADIUS = 10;
-        
+
         public ActionResult Index()
         {
             return View(db.Sessions.ToList());
         }
-        
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +36,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-        
+
         public ActionResult Create()
         {
             return View();
@@ -70,40 +70,47 @@ namespace Camelot.Controllers
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
             var round = db.Rounds.Find(roundID);
-            var part = round.Parts.FirstOrDefault();
+            var parts = round.Parts;
 
-            if (part == null)
+            if (parts == null)
             {
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
 
-            var responses = part.Responses.ToList();
+            System.Collections.ArrayList temp = new System.Collections.ArrayList();
 
-            var datasets = responses.Select(r =>
+            foreach (Part part in parts)
             {
-                var point = new
-                {
-                    x = (int)r.Importance,
-                    y = (int)r.Feasability,
-                    r = RADIUS
-                };
+                var responses = part.Responses.ToList();
 
-                var points = new[] { point }.ToList();
-                return new
+                var datasets = responses.Select(r =>
                 {
-                    label = r.Participant,
-                    backgroundColor = r.Color,
-                    hoverBackgroundColor = r.Color,
-                    data = points
-                };
+                    var point = new
+                    {
+                        x = (int)r.Importance,
+                        y = (int)r.Feasability,
+                        r = RADIUS
+                    };
+
+                    var points = new[] { point }.ToList();
+                    return new
+                    {
+                        label = r.Participant,
+                        backgroundColor = r.Color,
+                        hoverBackgroundColor = r.Color,
+                        data = points
+                    };
+                }).ToList();
+
+                temp.Add(datasets.First());
             }
-            ).ToList();
+
 
             db.SaveChanges();
 
-            return Json(datasets, JsonRequestBehavior.AllowGet);
+            return Json(temp, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,StartTime,EndTime")] Session session)
@@ -118,7 +125,7 @@ namespace Camelot.Controllers
 
             return View(session);
         }
-        
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -132,7 +139,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,StartTime,EndTime")] Session session)
@@ -146,7 +153,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-        
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -160,7 +167,7 @@ namespace Camelot.Controllers
             }
             return View(session);
         }
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -171,7 +178,7 @@ namespace Camelot.Controllers
             SessionHub.BroadcastData();
             return RedirectToAction("Index");
         }
-        
+
         public ActionResult Start(int? id)
         {
             if (id == null)
@@ -184,7 +191,8 @@ namespace Camelot.Controllers
                 return HttpNotFound();
             }
 
-            var sessionRound = new SessionRound {
+            var sessionRound = new SessionRound
+            {
                 SessionID = id.Value,
                 SessionName = session.Name,
                 Number = 1
@@ -220,7 +228,7 @@ namespace Camelot.Controllers
 
                 db.Parts.Add(part);
                 db.SaveChanges();
-                
+
                 SessionHub.BroadcastTopic(round);
 
                 return RedirectToAction("Plot", "Voting", new { id = round.ID });
