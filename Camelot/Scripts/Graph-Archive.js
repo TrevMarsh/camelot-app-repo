@@ -88,13 +88,25 @@ function drawChart(chartData) {
                     beginAtZero: true
                 }
             }],
-        }
+        },
+        legend: {
+            display: true,
+        },
+        tooltips: {
+            callbacks: {
+                title: function(tooltipItem, data){
+                    return "testTitle";
+                },
+                afterLabel: function (tooltipItem, data) {
+                    return chartData.roundID;
+                }
+            }
+        },
     };
 
     // For a bubble chart
     var bubbleChart = new Chart(ctx, {
         type: 'bubble',
-        labels: chartData.Names,
         data: data,
         options: options
     });

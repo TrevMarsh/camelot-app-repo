@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
@@ -59,3 +59,19 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui");
+    @Styles.Render("~/Content/themes/base");
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({
+                dateFormat: "dd/M/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+100" //100 yrs ago, 100 yrs after
+            });
+        })
+    </script>    
+}
