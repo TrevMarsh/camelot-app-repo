@@ -88,14 +88,20 @@ namespace Camelot.Controllers
             return RedirectToAction("Start", "Session", new { id = session.ID });
         }
 
-        public ActionResult Room(SessionParticipant vm)
+        public ActionResult Room(JoinParticipant jp)
         {
-            if (vm.ID == null)
+            if (jp == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var session = db.Sessions.Find(vm.ID);
+            SessionParticipant vm = new SessionParticipant();
+
+            vm.SessionID = jp.SessionID;
+            vm.ID = jp.ID;
+            vm.Name = jp.Name;
+
+            var session = db.Sessions.Find(vm.SessionID);
             vm.SessionName = session.Name;
             
             var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Dark);
@@ -106,36 +112,99 @@ namespace Camelot.Controllers
             return View(vm);
         }
 
-        public ActionResult Register(int? id)
+        [HttpGet]
+        public ActionResult Register(int id)
         {
+            JoinParticipant jp = new JoinParticipant();
+            jp.SessionID = id;
+            return View(jp);
+        }
 
-            if (id == null)
+        [HttpPost]
+        public ActionResult Register(JoinParticipant joinParticipant)
+        {
+            if (joinParticipant.ID == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var vm = new SessionParticipant
+            if (ModelState.IsValid)
             {
-                ID = id
+                db.joinParticipants.Add(joinParticipant);
+                db.SaveChanges();
+            }
+            
+            return RedirectToAction("Room", "Voting", joinParticipant);
+        }
+
+
+        //public ActionResult Register(int? id)
+        //{
+
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    var vm = new SessionParticipant
+        //    {
+        //        ID = id
+        //    };
+
+        //    return View(vm);
+        //}
+
+        
+        public ActionResult Next(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Session session = db.Sessions.Find(id);
+            Round round = db.Rounds.Find(id);
+            if (session == null)
+            {
+                return HttpNotFound();
+            }
+
+            var sessionRound = new SessionRound
+            {
+                SessionID = id.Value,
+                SessionName = session.Name,
+                Number = round.Number + 1
             };
 
-            return View(vm);
-        }
-
-        public ActionResult Next()
-        {
-            return RedirectToAction("Start");
-        }
-
-        //Finish the current session
-        public ActionResult Close()
-        {
-            return View();
+            return View("Start", "Session", sessionRound);
         }
 
         [HttpPost]
-        public ActionResult GetVotingControls(Round round, string user, string color)
+        public ActionResult Next(SessionRound sessionRound)
         {
+            Round round = new Round
+            {
+                Number = sessionRound.Number + 1
+            };
+
+            return RedirectToAction("Start", "Session");
+
+        }
+
+        //Finish the current session
+        public RedirectToRouteResult Close(int? id)
+        {
+            //set the session into archive
+            Session session = db.Sessions.Find(id);
+            session.EndTime = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("Program", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult GetVotingControls(int roundID, string user, string color)
+        {
+
+            Round round = db.Rounds.Find(roundID);
             var partID = round.Parts.Where(p => p.IsActive).First().ID;
             var vm = new TopicResponse
             {
@@ -145,6 +214,14 @@ namespace Camelot.Controllers
                 Color = color
             };
             return PartialView("_VotingForm", vm);
+        }
+
+        public int? CheckSession(int ID)
+        {
+            var session = db.Sessions.Find(ID);
+            Round round = session.Rounds.FirstOrDefault(q => q.SessionID == session.ID && q.IsActive == true);
+            if (round == null) return null;
+            else return round.ID;
         }
 
         [HttpPost]
@@ -184,6 +261,7 @@ namespace Camelot.Controllers
 
             db.Parts.Add(parts);
             db.SaveChanges();
+            SessionHub.RepeatTopic();
 
             return RedirectToAction("Plot", "Voting", new { id = ID });
         }

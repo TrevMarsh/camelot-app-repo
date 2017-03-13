@@ -44,7 +44,7 @@ namespace Camelot
         public static void BroadcastTopic(Round round)
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<SessionHub>();
-            context.Clients.All.updateVoteControls(round);
+            context.Clients.All.updateVoteControls(round.ID);
         }
 
         [HubMethodName("responceToTopic")]
@@ -52,6 +52,13 @@ namespace Camelot
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<SessionHub>();
             context.Clients.All.updateGraph(roundID);
+        }
+
+        [HubMethodName("RepeatTopic")]
+        public static void RepeatTopic()
+        {
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<SessionHub>();
+            context.Clients.All.updateRepeat();
         }
     }
 }

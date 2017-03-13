@@ -18,6 +18,7 @@ namespace Camelot.Controllers
         private CamelotContext db = new CamelotContext();
         private readonly int RADIUS = 10;
 
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Sessions.ToList());
@@ -123,6 +124,8 @@ namespace Camelot.Controllers
                 return RedirectToAction("Index");
             }
 
+
+
             return View(session);
         }
 
@@ -179,23 +182,36 @@ namespace Camelot.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Start(int? id)
+        [HttpGet]
+        public ActionResult Start(int? sessionID, string flag)
         {
-            if (id == null)
+            if (sessionID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Session session = db.Sessions.Find(id);
+            Session session = db.Sessions.Find(sessionID);
+            
             if (session == null)
             {
                 return HttpNotFound();
             }
 
+            int roundNumber = 0;
+            if (flag == null)
+            {
+                roundNumber = 1;
+            }
+            else if( flag.Equals("Next") )
+            {
+                Round round = session.Rounds.Last();
+                roundNumber = round.Number + 1;
+            }
+
             var sessionRound = new SessionRound
             {
-                SessionID = id.Value,
+                SessionID = sessionID.Value,
                 SessionName = session.Name,
-                Number = 1
+                Number = roundNumber
             };
 
             return View(sessionRound);
@@ -207,15 +223,18 @@ namespace Camelot.Controllers
         {
             if (!String.IsNullOrWhiteSpace(sessionRound.Topic))
             {
+                Session session = db.Sessions.Find(sessionRound.SessionID);
+                session.Active = true;
+
                 Round round = new Round
                 {
                     Number = sessionRound.Number,
                     Topic = sessionRound.Topic,
-                    SessionID = sessionRound.SessionID
+                    SessionID = sessionRound.SessionID,
+                    IsActive = true
                 };
 
                 db.Rounds.Add(round);
-                db.SaveChanges();
 
                 // 1. create a new part for the newly created round and add it too it
 

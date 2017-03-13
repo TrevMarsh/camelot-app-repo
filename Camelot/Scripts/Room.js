@@ -10,16 +10,21 @@
     sessionhub.client.updateVoteControls = function (round) {
         getControls(round);
     }
+
+    // Refresh connection when host repeat
+    sessionhub.client.updateRepeat = function () {
+        getRepeat();
+    }
 });
 
-function getControls(model) {
+function getControls(id) {
     // contintue here! use the value of the text label of the user and pass it along to keep a new vm company
     var user = $('#participant').text();
     var color = rgb2hex($('#color').css('backgroundColor'));
 
     var section = $('#votingControls');
     var json = JSON.stringify({
-        'round': model,
+        'roundID': id,
         'user': user,
         'color': color
     });
@@ -38,6 +43,22 @@ function getControls(model) {
         }
     });
 }
+
+function checkRound(ID) {
+    $.ajax({
+        url: "/Voting/CheckSession/" + ID,
+        success: function (result) {
+            if (result !== undefined || result != null || result.length >= 0)
+                getControls(result);
+
+        },
+        error: function (result) { alert(result); }
+    });
+}
+
+function getRepeat() {
+    location.reload();
+    }
 
 function rgb2hex(rgb) {
     rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);

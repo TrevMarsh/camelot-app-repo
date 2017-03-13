@@ -1,5 +1,5 @@
-﻿@model Camelot.ViewModels.SessionParticipant
-
+﻿@model Camelot.Models.JoinParticipant
+    @* whatever models stated above, it means that the controller has to pass that model*@
 
 @{
     ViewBag.Title = "Register";
@@ -10,12 +10,13 @@
 <div class="clearfix"> &nbsp; </div>
 <hr />
 
-@using (Html.BeginForm("Room", "Voting", FormMethod.Post))
+@using (Html.BeginForm("Register", "Voting", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         @Html.HiddenFor(m => m.ID)
+        @Html.HiddenFor(m => m.SessionID)
 
         <div class="form-group">
             @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label col-md-2" })

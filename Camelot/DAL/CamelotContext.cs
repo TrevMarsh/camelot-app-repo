@@ -17,5 +17,6 @@ namespace Camelot.DAL
         public DbSet<Part> Parts { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<UserAccount> userAccount { get; set; }
+        public DbSet<JoinParticipant> joinParticipants { get; set; }
     }
 }
