@@ -90,7 +90,7 @@ function drawChart(chartData) {
             }],
         },
         legend: {
-            display: true,
+            display: false
         },
         tooltips: {
             callbacks: {

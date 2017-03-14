@@ -240,14 +240,14 @@ namespace Camelot.Controllers
 
             //put your color code here
 
-            var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Light);
+            /*var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Light);
             var hex = ColorTranslator.ToHtml(color);
             response.Color = hex;
 
             if (response.Participant == Response.Participant)
             {
                 response.Color = RandomColor
-            }
+            }*/
 
             db.Responses.Add(response);
             db.SaveChanges();

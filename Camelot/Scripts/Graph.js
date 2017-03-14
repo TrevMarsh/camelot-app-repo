@@ -77,6 +77,9 @@ function drawChart(chartData) {
 
                 }
             }],
+            legend: {
+                display: false
+            },
             xAxes: [{
                 display: true,
                 ticks: {
