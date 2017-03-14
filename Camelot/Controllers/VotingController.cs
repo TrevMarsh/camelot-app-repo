@@ -228,6 +228,7 @@ namespace Camelot.Controllers
         [ValidateAntiForgeryToken]
         public PartialViewResult Vote([Bind(Include = "PartID,Participant,Topic,Importance,Feasability,Color")] TopicResponse topicResponse)
         {
+
             Response response = new Response
             {
                 Participant = topicResponse.Participant,
@@ -236,7 +237,18 @@ namespace Camelot.Controllers
                 Feasability = topicResponse.Feasability,
                 Color = topicResponse.Color
             };
-            
+
+            //put your color code here
+
+            var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Light);
+            var hex = ColorTranslator.ToHtml(color);
+            response.Color = hex;
+
+            if (response.Participant == Response.Participant)
+            {
+                response.Color = RandomColor
+            }
+
             db.Responses.Add(response);
             db.SaveChanges();
 

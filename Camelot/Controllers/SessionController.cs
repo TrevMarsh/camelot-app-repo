@@ -103,7 +103,10 @@ namespace Camelot.Controllers
                     };
                 }).ToList();
 
-                temp.Add(datasets.First());
+                if (datasets != null && datasets.Count()> 0)
+                {
+                    temp.AddRange(datasets);
+                }
             }
 
 
