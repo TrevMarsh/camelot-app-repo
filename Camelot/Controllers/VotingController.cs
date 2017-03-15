@@ -196,6 +196,7 @@ namespace Camelot.Controllers
             //set the session into archive
             Session session = db.Sessions.Find(id);
             session.EndTime = DateTime.Now;
+            session.Active = false;
             db.SaveChanges();
             return RedirectToAction("Program", "Home");
         }
