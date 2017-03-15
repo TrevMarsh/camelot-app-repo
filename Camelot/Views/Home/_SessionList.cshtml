@@ -9,6 +9,7 @@
             @Html.DisplayNameFor(model => model.StartTime)
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -21,6 +22,9 @@
         </td>
         <td>
             @Html.ActionLink("Start", "Start", "Session", new { sessionID = item.ID }, new { @class = "btn btn-success", @style = "color:white" })
+        </td>
+        <td>
+            @Html.ActionLink("Finish", "Close", "Voting", new { id = item.ID }, new { @class = "btn btn-danger", @style = "color:white"})
         </td>
     </tr>
 }
