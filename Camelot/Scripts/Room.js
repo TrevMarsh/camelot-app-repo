@@ -21,12 +21,14 @@ function getControls(id) {
     // contintue here! use the value of the text label of the user and pass it along to keep a new vm company
     var user = $('#participant').text();
     var color = rgb2hex($('#color').css('backgroundColor'));
+    var joinParticipantID = $("#ID").val();
 
     var section = $('#votingControls');
     var json = JSON.stringify({
         'roundID': id,
         'user': user,
-        'color': color
+        'color': color,
+        'joinParticipantID' : joinParticipantID
     });
     $.ajax(
     {

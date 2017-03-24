@@ -103,11 +103,10 @@ namespace Camelot.Controllers
 
             var session = db.Sessions.Find(vm.SessionID);
             vm.SessionName = session.Name;
-            
-            var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Dark);
-            var hex = ColorTranslator.ToHtml(color);
 
-            vm.Color = hex;
+            var color = db.joinParticipants.Find(jp.ID).Color;
+
+            vm.Color = color;
 
             return View(vm);
         }
@@ -130,6 +129,10 @@ namespace Camelot.Controllers
 
             if (ModelState.IsValid)
             {
+                var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Dark);
+                var hex = ColorTranslator.ToHtml(color);
+
+                joinParticipant.Color = hex;
                 db.joinParticipants.Add(joinParticipant);
                 db.SaveChanges();
             }
@@ -202,7 +205,7 @@ namespace Camelot.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetVotingControls(int roundID, string user, string color)
+        public ActionResult GetVotingControls(int roundID, string user, string color, int joinParticipantID)
         {
 
             Round round = db.Rounds.Find(roundID);
@@ -212,7 +215,8 @@ namespace Camelot.Controllers
                 PartID = partID,
                 Participant = user,
                 Topic = round.Topic,
-                Color = color
+                Color = color,
+                JoinParticipantID = joinParticipantID
             };
             return PartialView("_VotingForm", vm);
         }
@@ -227,7 +231,7 @@ namespace Camelot.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public PartialViewResult Vote([Bind(Include = "PartID,Participant,Topic,Importance,Feasability,Color")] TopicResponse topicResponse)
+        public PartialViewResult Vote([Bind(Include = "PartID,Participant,Topic,Importance,Feasability,Color, JoinParticipantID")] TopicResponse topicResponse)
         {
 
             Response response = new Response
@@ -236,24 +240,37 @@ namespace Camelot.Controllers
                 PartID = topicResponse.PartID,
                 Importance = topicResponse.Importance,
                 Feasability = topicResponse.Feasability,
-                Color = topicResponse.Color
+                Color = topicResponse.Color,
+                JoinParticipantID = topicResponse.JoinParticipantID
             };
 
-            //put your color code here
+            var part = db.Parts.Find(response.PartID);
 
-            /*var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Light);
-            var hex = ColorTranslator.ToHtml(color);
-            response.Color = hex;
+            Round round = part.Round;
+            int parts = round.Parts.Count();
 
-            if (response.Participant == Response.Participant)
+            /*System.Drawing.Color color = System.Drawing.Color.FromArgb(topicResponse.Color);
+            float blue = (float)color.B - 5;
+            color = blue;
+            byte temp = (byte)(parts * 5);
+            color = blue - temp;
+            //color = color.B - temp;
+            */
+
+            // Color
+            
+            if (parts > 1)
             {
-                response.Color = RandomColor
-            }*/
+                System.Drawing.Color color = System.Drawing.ColorTranslator.FromHtml(topicResponse.Color);
+                float green = color.G - 5 * parts;
+                float blue = color.B - 5 * parts;
+                float red = color.R;
+                //topicResponse.Color = 
+            }
+
 
             db.Responses.Add(response);
             db.SaveChanges();
-
-            var part = db.Parts.Find(response.PartID);
             
             SessionHub.RespondToTopic(part.RoundID);
 

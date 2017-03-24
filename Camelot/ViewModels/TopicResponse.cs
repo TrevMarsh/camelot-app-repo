@@ -10,5 +10,6 @@ namespace Camelot.ViewModels
         public Score Importance { get; set; }
         public Score Feasability { get; set; }
         public string Color { get; set; }
+        public int JoinParticipantID { get; set; }
     }
 }

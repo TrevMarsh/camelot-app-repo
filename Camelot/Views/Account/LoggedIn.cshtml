@@ -5,6 +5,7 @@
 
 @if (Session["UserId"] != null)
 {
-    <h4>Hello @Session["Username"].ToString()</h4>
+    <h4>Hello, @Session["Username"].ToString()</h4>
+    <br />
+    <h4>Go to <a href="http://localhost:55699/Home/Join">join session</a> </h4>
 }
-

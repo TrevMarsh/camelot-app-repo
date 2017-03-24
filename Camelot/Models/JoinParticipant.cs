@@ -10,5 +10,6 @@ namespace Camelot.Models
         public int ID { get; set; }
         public String Name { get; set; }
         public int SessionID { get; set; }
+        public string Color { get; set; }
     }
 }
