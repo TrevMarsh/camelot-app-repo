@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Camelot_Server.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="Camelot_Server">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cgivoting;AccountKey=$(_cgivoting.key_)" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="ff06f34f-e78c-4249-8610-d8a19217b12e" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

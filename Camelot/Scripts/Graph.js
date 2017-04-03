@@ -71,15 +71,15 @@ function drawChart(chartData) {
                     min: 1,
                     max: 5,
                     stepSize: 2,
-                    maxTicksLimit: 3
+                    maxRotation: 0,
+                    autoskip: 0,
+                    maxTicksLimit: 5
                 },
                 gridLines: {
 
                 }
             }],
-            legend: {
-                display: false
-            },
+
             xAxes: [{
                 display: true,
                 ticks: {
@@ -87,10 +87,19 @@ function drawChart(chartData) {
                     min: 1,
                     max: 5,
                     stepSize: 2,
-                    maxTicksLimit: 3,
+                    maxTicksLimit: 5,
+                    maxRotation: 0,
+                    autoskip: true,
                     beginAtZero: true
                 }
             }],
+        },
+        legend: {
+            display: false,
+            position: 'left'
+        },
+        tooltips: {
+            mode: 'point'
         }
     };
 

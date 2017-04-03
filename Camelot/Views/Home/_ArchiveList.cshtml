@@ -8,6 +8,9 @@
         <th>
             @Html.DisplayNameFor(model => model.StartTime)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
         <th></th>
     </tr>
 
@@ -18,7 +21,10 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
+                @item.StartTime.ToString("dd-MM-yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
                 @Html.ActionLink("View", "RoundList", "Session", new { id = item.ID }, new { @class = "btn btn-success", @style = "color:white" })

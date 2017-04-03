@@ -92,11 +92,18 @@ function drawChart(chartData) {
         legend: {
             display: false
         },
+        scaleLabel: function(data)
+        {
+            if(Number(data.value) === 1)
+                return 'taco'
+        },
+    
         tooltips: {
+            mode: 'point',
             callbacks: {
-                title: function(tooltipItem, data){
-                    return "testTitle";
-                },
+                //title: function(tooltipItem, data){
+                //    return "TestTooltips";
+                //},
                 afterLabel: function (tooltipItem, data) {
                     return chartData.roundID;
                 }

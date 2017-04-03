@@ -96,15 +96,17 @@ namespace Camelot.Controllers
                     var points = new[] { point }.ToList();
                     return new
                     {
-                        label = r.Participant,
+                        label = "Part: " + r.Part.Number + " Participant: " + r.Participant,
                         backgroundColor = r.Color,
                         hoverBackgroundColor = r.Color,
+                        borderWidth = 10,
                         data = points
                     };
                 }).ToList();
 
                 if (datasets != null && datasets.Count()> 0)
                 {
+                   
                     temp.AddRange(datasets);
                 }
             }

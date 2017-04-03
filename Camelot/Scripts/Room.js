@@ -19,40 +19,42 @@
 
 function getControls(id) {
     // contintue here! use the value of the text label of the user and pass it along to keep a new vm company
+    //var id = round.ID;
     var user = $('#participant').text();
     var color = rgb2hex($('#color').css('backgroundColor'));
     var joinParticipantID = $("#ID").val();
 
-    var section = $('#votingControls');
-    var json = JSON.stringify({
-        'roundID': id,
-        'user': user,
-        'color': color,
-        'joinParticipantID' : joinParticipantID
-    });
-    $.ajax(
-    {
-        url: '/Voting/GetVotingControls',
-        data: json,
-        contentType: 'application/json ; charset:utf-8',
-        type: 'POST',
-        dataType: 'html',
-        success: function (result) {
-            section.empty().append(result);
-        },
-        error: function (e) {
-            alert(e);
-        }
-    });
+    //if ($("#SessionID").val() == round.SessionID) {
+        var section = $('#votingControls');
+        var json = JSON.stringify({
+            'roundID': id,
+            'user': user,
+            'color': color,
+            'joinParticipantID': joinParticipantID
+        });
+        $.ajax(
+        {
+            url: '/Voting/GetVotingControls',
+            data: json,
+            contentType: 'application/json ; charset:utf-8',
+            type: 'POST',
+            dataType: 'html',
+            success: function (result) {
+                section.empty().append(result);
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    //}
 }
 
 function checkRound(ID) {
     $.ajax({
         url: "/Voting/CheckSession/" + ID,
         success: function (result) {
-            if (result !== undefined || result != null || result.length >= 0)
+            if (result !== undefined || result !== null || result.length >= 0)
                 getControls(result);
-
         },
         error: function (result) { alert(result); }
     });
@@ -60,7 +62,7 @@ function checkRound(ID) {
 
 function getRepeat() {
     location.reload();
-    }
+}
 
 function rgb2hex(rgb) {
     rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);

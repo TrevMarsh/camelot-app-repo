@@ -35,9 +35,10 @@ namespace Camelot.Controllers
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
             var round = db.Rounds.Find(roundID);
-            var part = round.Parts.FirstOrDefault(p => p.IsActive);
+            var parts = round.Parts;
+            //var parts = round.Parts.Last();
 
-            if (part == null)
+            if (parts == null)
             {
                 // this shouldn't happen so need to return a failed graph data here;
                 return Json(new { }, JsonRequestBehavior.AllowGet);
@@ -45,8 +46,12 @@ namespace Camelot.Controllers
 
             // if the part does exist however get the responses and return the datasets
 
-            var responses = part.Responses.ToList();
-            
+            List<Response> responses = new List<Models.Response>();
+            foreach (Part part in parts)
+            {
+                responses.AddRange(part.Responses);
+            }
+
             var datasets = responses.Select(r =>
                {
                    var point = new
@@ -57,13 +62,17 @@ namespace Camelot.Controllers
                    };
 
                    var points = new[] { point }.ToList();
+
+                   
                    return new
                    {
                        label = r.Participant,
                        backgroundColor = r.Color,
                        hoverBackGroundColor = r.Color,
+                       borderWidth = 10,
                        data = points
                    };
+                   
                }
             ).ToList();
 
@@ -85,7 +94,7 @@ namespace Camelot.Controllers
             db.Rounds.Remove(round);
             db.SaveChanges();
 
-            return RedirectToAction("Start", "Session", new { id = session.ID });
+            return RedirectToAction("Start", "Session", new { sessionID = session.ID });
         }
 
         public ActionResult Room(JoinParticipant jp)
@@ -119,7 +128,7 @@ namespace Camelot.Controllers
             return View(jp);
         }
 
-        [HttpPost]
+       [HttpPost]
         public ActionResult Register(JoinParticipant joinParticipant)
         {
             if (joinParticipant.ID == 0)
@@ -129,17 +138,17 @@ namespace Camelot.Controllers
 
             if (ModelState.IsValid)
             {
-                var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Dark);
+                var color = RandomColor.GetColor(ColorScheme.Random, Luminosity.Light);
+                //var color = Color.Red;
                 var hex = ColorTranslator.ToHtml(color);
 
                 joinParticipant.Color = hex;
                 db.joinParticipants.Add(joinParticipant);
                 db.SaveChanges();
             }
-            
+
             return RedirectToAction("Room", "Voting", joinParticipant);
         }
-
 
         //public ActionResult Register(int? id)
         //{
@@ -157,7 +166,7 @@ namespace Camelot.Controllers
         //    return View(vm);
         //}
 
-        
+
         public ActionResult Next(int? id)
         {
             if (id == null)
@@ -224,7 +233,10 @@ namespace Camelot.Controllers
         public int? CheckSession(int ID)
         {
             var session = db.Sessions.Find(ID);
-            Round round = session.Rounds.FirstOrDefault(q => q.SessionID == session.ID && q.IsActive == true);
+            Round round = null;
+            if (session.Rounds != null && session.Rounds.Count() > 0)
+                round = session.Rounds.Last(q => q.SessionID == session.ID && q.IsActive == true);
+
             if (round == null) return null;
             else return round.ID;
         }
@@ -247,31 +259,37 @@ namespace Camelot.Controllers
             var part = db.Parts.Find(response.PartID);
 
             Round round = part.Round;
+            response.PartID = round.Parts.Last().ID;
             int parts = round.Parts.Count();
 
-            /*System.Drawing.Color color = System.Drawing.Color.FromArgb(topicResponse.Color);
-            float blue = (float)color.B - 5;
-            color = blue;
-            byte temp = (byte)(parts * 5);
-            color = blue - temp;
-            //color = color.B - temp;
-            */
-
-            // Color
-            
             if (parts > 1)
             {
                 System.Drawing.Color color = System.Drawing.ColorTranslator.FromHtml(topicResponse.Color);
-                float green = color.G - 5 * parts;
-                float blue = color.B - 5 * parts;
-                float red = color.R;
-                //topicResponse.Color = 
+                int green = color.G - 8 * parts;
+                int blue = color.B;
+                int red = color.R - 8 * parts;
+                int alpha = color.A - 8 * parts;
+                if (green > 255)
+                {
+                    green = 255;
+                }
+                if (blue > 255)
+                {
+                    blue = 255;
+                }
+                if (red > 255)
+                {
+                    red = 255;
+                }
+                
+                    response.Color = ColorTranslator.ToHtml(Color.FromArgb(25, red, green, blue));
+                
             }
 
 
             db.Responses.Add(response);
             db.SaveChanges();
-            
+
             SessionHub.RespondToTopic(part.RoundID);
 
             return PartialView("_VoteConfirmation");
@@ -280,8 +298,9 @@ namespace Camelot.Controllers
         [HttpGet]
         public RedirectToRouteResult Repeat(int ID)
         {
-            var currentRound = db.Rounds.FirstOrDefault(r => r.ID == ID);
-            var partNumber = currentRound.Parts.Last().ID + 1;
+            //var currentRound = db.Rounds.FirstOrDefault(r => r.ID == ID);
+            var currentRound = db.Rounds.Find(ID);
+            var partNumber = currentRound.Parts.Last().Number + 1;
             Part parts = new Part
             {
                 IsActive = true,
